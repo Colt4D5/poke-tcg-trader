@@ -1,8 +1,11 @@
 <script lang="ts">
-  import '@picocss/pico';
-  import { Toaster } from 'svelte-french-toast';
+	import '../app.pcss';
+  import { Toaster } from "$lib/components/ui/sonner";
+	// import '@picocss/pico';
+
+	let { children } = $props();
 </script>
 
-<Toaster></Toaster>
-
-<slot></slot>
+<Toaster />
+ 
+{@render children()}
