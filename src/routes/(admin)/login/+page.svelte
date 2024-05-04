@@ -4,8 +4,8 @@
   import { Button } from "$lib/components/ui/button/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
-  import { toast } from "svelte-sonner";
-  import { enhance, applyAction } from '$app/forms';
+  // import { toast } from "svelte-sonner";
+  import { enhance } from '$app/forms';
 
   // const { form } = $props();
 </script>
@@ -53,19 +53,25 @@
            Fill out the form to sign up 
           </Card.Description>
         </Card.Header>
-        <Card.Content class="space-y-2">
-          <div class="space-y-1">
-            <Label for="signup-username">Username</Label>
-            <Input id="signup-username" name="username" type="text" />
-          </div>
-          <div class="space-y-1">
-            <Label for="signup-password">Password</Label>
-            <Input id="signup-password" name="password" type="password" />
-          </div>
-        </Card.Content>
-        <Card.Footer>
-          <Button>Sign Up</Button>
-        </Card.Footer>
+        <form method="POST" action="?/signup" use:enhance={() => {
+          return async ({ result }) => {
+            console.log(result.data.status);
+          }
+        }}>
+          <Card.Content class="space-y-2">
+            <div class="space-y-1">
+              <Label for="signup-username">Username</Label>
+              <Input id="signup-username" name="username" type="text" />
+            </div>
+            <div class="space-y-1">
+              <Label for="signup-password">Password</Label>
+              <Input id="signup-password" name="password" type="password" />
+            </div>
+          </Card.Content>
+          <Card.Footer>
+            <Button type="submit">Sign Up</Button>
+          </Card.Footer>
+        </form>
       </Card.Root>
     </Tabs.Content>
   </Tabs.Root>
