@@ -1,7 +1,11 @@
 <script lang="ts">
   const { data } = $props();
-  // console.log(data.card);
+  const usersName = `${data.user.first_name} ${data.user.last_name}`;
+  import { buttonVariants } from "$lib/components/ui/button/index.js";
 </script>
 
-<h2>{ data.card.id }</h2>
-<img src={data.card.images.small} alt={`Pokemon card of ${data.card.name}`} />
+<h2>Welcome, { usersName }!</h2>
+
+<a href="/open" class={buttonVariants({ variant: "outline" })}>
+  Open Pack
+</a>
