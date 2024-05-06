@@ -3,8 +3,12 @@ import pokemon from 'pokemontcgsdk';
 import { connection } from '$db';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async () => {
-	const cardsInSet = await pokemon.card.all({ q: `set.id:base1` });
+export const POST: RequestHandler = async ({ request }) => {
+  let { userId, set } = await request.json();
+
+  if (!set) set = 'base1';
+
+	const cardsInSet = await pokemon.card.all({ q: `set.id:${set}` });
 
   const pokemonCards = cardsInSet.filter(card => card.supertype === 'Pokémon').sort(() => Math.random() - 0.5).slice(0, 7);
   const trainerCard = cardsInSet.filter(card => card.supertype === 'Trainer').sort(() => Math.random() - 0.5).slice(0, 1);
@@ -14,7 +18,7 @@ export const GET: RequestHandler = async () => {
 
 
   // save new record in Orders (ordertype, orderid, userid, date, title?)
-  const [results, fields] = await connection.query('INSERT INTO Orders (user_id, title, order_type) VALUES (?,?,?)', [3, 'base1', 'booster']);
+  const [results, fields] = await connection.query('INSERT INTO Orders (user_id, title, order_type) VALUES (?,?,?)', [userId, set, 'booster']);
 
   const OrderId = results.insertId;
 

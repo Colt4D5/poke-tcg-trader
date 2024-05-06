@@ -1,14 +1,17 @@
 <script lang="ts">
+  const { data } = $props();
+
   import { buttonVariants, Button } from "$lib/components/ui/button/index.js";
   let cards = $state([]);
 	
-  async function getCards() {
+  async function getCards(user) {
     // console.log("getting cards...");
     const res = await fetch('/api/open-pack', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify({ userId: user.uid, set: 'base1' })
     });
     const data = await res.json();
     // console.log(data);
@@ -22,7 +25,7 @@
   Home
 </a>
 
-<Button onclick={getCards}>Get Cards</Button>
+<Button onclick={() => getCards(data.user)}>Get Cards</Button>
 
 <div id="card-grid" class="py-12 flex flex-wrap justify-start items-start gap-4 w-11/12 mx-auto">
   {#each cards as card (card.id)}

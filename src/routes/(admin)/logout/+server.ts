@@ -1,10 +1,10 @@
+import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = ({ cookies }) => {
-  cookies.set("user", "", { 
-    secure: true, 
-    httpOnly: true, 
-  	path: '/' 
-  });
-	return new Response(JSON.stringify({ status: 200, msg: "successfully logged out" }));
+  cookies.delete('user', { path: '/' });
+  cookies.delete('logged_in', { path: '/' });
+  cookies.delete('user_email', { path: '/' });
+
+	throw redirect(302, '/login');
 };

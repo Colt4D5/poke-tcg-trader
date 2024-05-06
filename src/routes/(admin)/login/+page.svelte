@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { applyAction, enhance, type SubmitFunction } from '$app/forms'
+  import { applyAction, enhance, type SubmitFunction } from '$app/forms'
   import { goto } from '$app/navigation';
   import * as Tabs from "$lib/components/ui/tabs/index.js";
   import * as Card from "$lib/components/ui/card/index.js";
@@ -8,7 +8,7 @@
   import { Label } from "$lib/components/ui/label/index.js";
   import { toast } from "svelte-sonner";
 
-	const login: SubmitFunction = () => {
+  const login: SubmitFunction = () => {
     return async ({ result }) => {
       if (result?.data?.status === 200) {
         toast.success("Success!");
