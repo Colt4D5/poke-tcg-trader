@@ -23,9 +23,9 @@ export const POST: RequestHandler = async ({ request }) => {
   const OrderId = results.insertId;
 
   if (OrderId) {
-    // save record for each card in CardInOrder (cardname, userid, orderid)
+    // save record for each card in CardsPurchased (cardname, userid, orderid)
     const cardsSaved = Promise.all(pulledCards.map(card => {
-			return connection.query('INSERT INTO CardInOrder (card_id, user_id, order_id) VALUES (?,?,?)', [card.id, 3, OrderId]);
+			return connection.query('INSERT INTO CardsPurchased (card_id, user_id, order_id) VALUES (?,?,?)', [card.id, 3, OrderId]);
     }))
     
     // save any cards in Cards that are not yet in the system
